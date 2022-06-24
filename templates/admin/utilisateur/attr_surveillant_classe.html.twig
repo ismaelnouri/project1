@@ -1,0 +1,204 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout Utilisateur{% endblock %}
+{% block body %}
+<div class="main-content">
+  {% for message in app.flashes('ERREUR') %}
+        <script>
+          function erreur(){
+        swal('Refusé', '{{ message }}', 'error')
+      }
+          window.onload = erreur;
+           // jWarning('{{ message }}', 'Notification', function(r) {});
+        </script>
+     {% endfor %}
+     {% for message in app.flashes('SUCCESS') %}
+        <script>
+          function success(){
+    // alert('ok')
+    swal('Réussie', '{{ message }}', 'success')
+    }
+          window.onload = success;
+         // jMessage('{{ message }}', 'Notification', function(r) {});
+      </script>
+  {% endfor %}
+     <div class="section-body">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4>Attribution surveillant-classe</h4>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-striped" id="table-1">
+                  <thead>
+                    <tr>
+                      <th class="text-center">#</th>
+                      <th>Nom</th>
+                      <th>Prenom</th>
+                      <th>Téléphone</th>
+                      <th>Profil</th>
+                      <th>Date</th>
+                      <th>Annee</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% set count = 1 %}
+                    {% for liste in surveillants %}
+                    <tr>
+                      <td>{{count}}</td>
+                      <td>{{liste.nomUtilisateur}}</td>
+                      <td>{{liste.prenomUtilisateur}}</td>
+                      <td>{{liste.telUtilisateur}}</td>
+                      <td>{{liste.idProfil.libelleProfil}}</td>
+                      <!-- <td class="align-middle">
+                        <div class="progress progress-xs">
+                          <div class="progress-bar bg-success width-per-90"></div>
+                        </div>
+                      </td> -->
+                      <td>{{liste.dateAjout|date('d-m-Y')}}</td>
+                      <td>
+                        <div class="badge badge-success badge-shadow">2021/2022</div>
+                      </td>
+                      <td><a href="#" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{liste.idUtilisateur}}">Attribuer</a>
+                        {#<a href="#" type="button" class="btn btn-primary" onclick="detail({{liste.idUtilisateur}})" data-toggle="modal" data-target="#detail{{liste.idUtilisateur}}">Consulter</a>#}
+                        </td>
+                    </tr>
+                    <!-- Attribution -->
+                      <div class="modal fade" id="exampleModal{{liste.idUtilisateur}}" tabindex="-1" role="dialog" aria-labelledby="formModal"
+                        aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="formModal"><u>Attribution de classe pour </u>: <strong>{{liste.nomUtilisateur}} {{liste.prenomUtilisateur}}</strong></h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <form action="{{path('attr_surveillant_classe')}}" method="post">
+                                <div class="form-group">
+                                  <label><h6>Classes</h6></label><br>
+                                  <input type="hidden" name="surveillant" value="{{liste.idUtilisateur}}">
+                                  {% for liste in classes %}
+                                  <div class="pretty p-icon p-curve p-tada">
+                                    <input type="checkbox" name="classes[]" value="{{liste.idClasse}}">
+                                    <div class="state p-primary-o">
+                                      <i class="icon material-icons">done</i>
+                                      <label>{{liste.codeClasse}}</label>
+                                    </div>
+                                  </div>
+                                  {% endfor %}
+                                </div>
+                              
+                                <button type="submit" class="btn btn-primary m-t-15 waves-effect">Valider</button>
+                              </form>
+                              
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- end attribution -->
+                      <!-- Détail -->
+                      <!-- <div class="modal fade" id="detail{{liste.idUtilisateur}}" tabindex="-1" role="dialog" aria-labelledby="formModal"
+                        aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="formModal"><u>Classes attribuées à </u>: <strong>{{liste.nomUtilisateur}} {{liste.prenomUtilisateur}}</strong></h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <form>
+                                <div class="form-group">
+                                  <label><h6>Classes attribuées</h6></label><br>
+                                  <div id="details"></div>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div> -->
+                      <!-- end détail -->
+                       
+                    {% set count = count + 1 %}
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> 
+</div>
+<script>
+    // function detail(id){
+    //     //var id = $('#iddepot').val();
+    //     console.log(id);
+    //     var parametros = {'id':id};
+    //     $.ajax({
+    //         url:'/detail',
+    //         type:"POST",
+    //         dataType:"json",
+    //         data:parametros,
+    //         async:true,
+    //         success: function(response){
+    //             console.log(response);
+    //             if("REQUETE" == response){
+    //                 $("#details").html("<td>Aucun resultat trouvé</td>");
+    //             }else{
+    //                 $("#details").html(response);
+    //             }
+    //         }
+    //     })
+    // }
+
+    function desattribuer(id){
+        //var id = $('#iddepot').val();
+        console.log(id);
+        var parametros = {'id':id};
+        $.ajax({
+            url:'/desattribuer',
+            type:"POST",
+            dataType:"json",
+            data:parametros,
+            async:true,
+            success: function(response){
+                console.log(response);
+                if("REQUETE" == response){
+                    $("#idDesattribuer").html("<td colspan='4'>Aucun resultat trouvé</td>");
+                }else{
+                    $("#idDesattribuer").html(response);
+                }
+            }
+        })
+    }
+    
+    function responsable(){
+        var id = $('#classe').val();
+        console.log(id);
+        var parametros = {'id':id};
+        $.ajax({
+            url:'/ajax/responsable',
+            type:"POST",
+            dataType:"json",
+            data:parametros,
+            async:true,
+            success: function(response){
+                console.log(response);
+                if("REQUETE" == response){
+                    $("#matiere").html("");
+                }else{
+                    $("#matiere").html(response);
+                }
+            }
+        })
+    }
+</script>
+{% endblock %}

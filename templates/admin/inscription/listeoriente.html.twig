@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste eleves{% endblock %}
+{% block body %}
+<div class="main-content">
+	{% for message in app.flashes('ERREUR') %}
+        <script>
+        	function erreur(){
+				swal('Good Job', '{{ message }}', 'error')
+			}
+        	window.onload = erreur;
+           // jWarning('{{ message }}', 'Notification', function(r) {});
+        </script>
+     {% endfor %}
+     {% for message in app.flashes('SUCCESS') %}
+      	<script>
+      		function success(){
+		// alert('ok')
+		swal('Good Job', '{{ message }}', 'success')
+	}
+        	window.onload = success;
+         // jMessage('{{ message }}', 'Notification', function(r) {});
+      </script>
+    {% endfor %}
+    <section class="section">
+      	<div class="section-body">
+        	<div class="row">
+        		<div class="col-12">
+              <form action="{{path('sup_multiple',{'verif':2})}}" method="post">
+                <div class="card">
+                  <div class="row card-header">
+                    <h4>Liste des orientés</h4>&nbsp;&nbsp;&nbsp;
+                    <a href="{{path('ajouteleve')}}" class="btn btn-primary">Ajouter<span class="ion ion-person-add"></span></a>&nbsp;&nbsp;&nbsp;
+                    <button type="submit" class="btn btn-primary">Supprimer&nbsp;<span class="ion ion-person-add"></span></button>&nbsp;&nbsp;&nbsp;
+                    <a href="{{path('listeeleve')}}" class="btn btn-primary">La liste des transférés<span class="ion ion-person-add"></span></a>&nbsp;&nbsp;&nbsp;
+                    <a href="{{path('listeoriente')}}" class="btn btn-primary">La liste des orientés<span class="ion ion-person-add"></span></a> 
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-striped table-hover" id="tableExport" style="width:100%;">
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th>#</th>
+                            <th>Annee</th>
+                            <th>Utilisateur</th>
+                            <th>Eleve</th>
+                            <th>Niveau</th>
+                            <th>Date orientation</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        	{% set count = 1 %}
+                        	{% for list in eleves %}
+                          <tr>
+                            <td><input type="checkbox" value="{{list.idOriente}}" name="mesIds[]"></td>
+                            <td>{{count}}</td>
+                            <td>{{list.idAnnee.libelleAnnee}}</td>
+                            <td>{{list.idUtilisateur.nomUtilisateur}} {{list.idUtilisateur.prenomUtilisateur}}</td>
+                            <td>{{list.idEleve.matriculeEleve}} {{list.idEleve.nomEleve}} {{list.idEleve.prenomEleve}}</td>
+                            <td>{{list.idNiveau.libelleNiveau}}</td>
+                            <td>{{list.dateOriente|date('d-m-Y')}}</td>
+                          </tr>
+                          {% set count = count + 1 %}
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                </form>
+              </div>
+        	</div>
+		</div>
+	</section>
+</div>
+{% endblock %}
+{% block javascript %}
+
+{% endblock %}

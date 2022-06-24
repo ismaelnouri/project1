@@ -1,0 +1,39 @@
+
+    <ul class="sidebar-menu">
+      <li class="menu-header">SURVEILLANT</li>
+      <li class="dropdown active">
+        <a href="{{path('index')}}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="menu-toggle nav-link has-dropdown"><i
+            data-feather="briefcase"></i><span>Inscription</span></a>
+        <ul class="dropdown-menu">
+          <li><a class="nav-link" href="{{path('listeinscription')}}">Liste inscription</a></li>
+          <li><a class="nav-link" href="{{path('ajoutinscription')}}">Ajout inscription</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="menu-toggle nav-link has-dropdown"><i
+            data-feather="briefcase"></i><span>Génération</span></a>
+        <ul class="dropdown-menu">
+          <li><a class="nav-link" href="{{path('bulletin')}}">Bulletin</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="menu-toggle nav-link has-dropdown"><i
+            data-feather="briefcase"></i><span>Impression bulletin</span></a>
+        <ul class="dropdown-menu">
+          <li><a class="nav-link" href="{{path('impbulparclasse')}}">Bulletin par classe</a></li>
+          <li><a class="nav-link" href="{{path('impbulparclasse')}}">Bulletin par eleve</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="menu-toggle nav-link has-dropdown"><i
+            data-feather="briefcase"></i><span>Reporting</span></a>
+        <ul class="dropdown-menu">
+          <li><a class="nav-link" href="{{path('reporting')}}">Reporting</a></li>
+        </ul>
+      </li>
+    </ul>
+  </aside>
+</div>

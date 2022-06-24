@@ -1,0 +1,25 @@
+
+    <ul class="sidebar-menu">
+      <li class="menu-header">COMPTABLE</li>
+      <li class="dropdown active">
+        <a href="{{path('index')}}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="menu-toggle nav-link has-dropdown"><i
+            data-feather="briefcase"></i><span>Allocation</span></a>
+        <ul class="dropdown-menu">
+          <li><a class="nav-link" href="{{path('listeallocateur')}}">Liste</a></li>
+          <li><a class="nav-link" href="{{path('paiementallocateur')}}">Paiement</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="menu-toggle nav-link has-dropdown"><i
+            data-feather="briefcase"></i><span>Coges</span></a>
+        <ul class="dropdown-menu">
+          <li><a class="nav-link" href="{{path('listecoges')}}">Liste</a></li>
+          <li><a class="nav-link" href="{{path('paiementcoges')}}">Paiement</a></li>
+        </ul>
+      </li>
+    </ul>
+  </aside>
+</div>

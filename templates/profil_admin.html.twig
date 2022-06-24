@@ -1,0 +1,59 @@
+
+    <ul class="sidebar-menu">
+      <li class="menu-header">ADMINISTRATEUR</li>
+      <li class="dropdown active">
+        <a href="{{path('index')}}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="menu-toggle nav-link has-dropdown"><i
+            data-feather="briefcase"></i><span>Utilisateurs</span></a>
+        <ul class="dropdown-menu">
+          <li><a class="nav-link" href="{{path('listeutilisateur')}}">Liste utilisateur</a></li>
+          <li><a class="nav-link" href="{{path('ajoututilisateur')}}">Ajout utilisateur</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="menu-toggle nav-link has-dropdown"><i
+            data-feather="briefcase"></i><span>Classes</span></a>
+        <ul class="dropdown-menu">
+          <li><a class="nav-link" href="{{path('listeclasse')}}">Liste classe</a></li>
+          <li><a class="nav-link" href="{{path('ajoutclasse')}}">Ajout classe</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="menu-toggle nav-link has-dropdown"><i
+            data-feather="briefcase"></i><span>Matieres</span></a>
+        <ul class="dropdown-menu">
+          <li><a class="nav-link" href="{{path('listematiere')}}">Liste matiere</a></li>
+          <li><a class="nav-link" href="{{path('ajoutmatiere')}}">Ajout matiere</a></li>
+          <li><a class="nav-link" href="{{path('annulermatieres')}}">Annuler l'ajout</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="menu-toggle nav-link has-dropdown"><i
+            data-feather="briefcase"></i><span>Attribution</span></a>
+        <ul class="dropdown-menu">
+          <li><a class="nav-link" href="{{path('attr_surveillant_classe')}}">Attribution-classe</a></li>
+          <li><a class="nav-link" href="{{path('desattribuer')}}">Désattribution-classe</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="menu-toggle nav-link has-dropdown"><i
+            data-feather="briefcase"></i><span>Allocation</span></a>
+        <ul class="dropdown-menu">
+          <li><a class="nav-link" href="{{path('ajoutallocateur')}}">Ajout-allocateur</a></li>
+          <li><a class="nav-link" href="{{path('listeallocateur')}}">Liste-allocateur</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="menu-toggle nav-link has-dropdown"><i
+            data-feather="briefcase"></i><span>Parametre</span></a>
+        <ul class="dropdown-menu">
+          <li><a class="nav-link" href="{{path('annee')}}">Annee</a></li>
+          <li><a class="nav-link" href="{{path('ajouteleve')}}">Enregistrer eleve</a></li>
+          <li><a class="nav-link" href="{{path('cloturer')}}">Cloturer l'année</a></li>
+        </ul>
+      </li>
+    </ul>
+  </aside>
+</div>

@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout Matiere{% endblock %}
+{% block body %}
+<div class="main-content">
+	{% for message in app.flashes('ERREUR') %}
+        <script>
+        	function erreur(){
+				swal('Refusé', '{{ message }}', 'error')
+			}
+        	window.onload = erreur;
+           // jWarning('{{ message }}', 'Notification', function(r) {});
+        </script>
+     {% endfor %}
+     {% for message in app.flashes('SUCCESS') %}
+      	<script>
+      		function success(){
+		// alert('ok')
+		swal('Réussie', '{{ message }}', 'success')
+	}
+        	window.onload = success;
+         // jMessage('{{ message }}', 'Notification', function(r) {});
+      </script>
+    {% endfor %}
+    <section class="section">
+      	<div class="section-body">
+        	<div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10 card">
+                    <form action="{{path('ajouteleve')}}" method="post" enctype="multipart/form-data">
+                    <div class="card-header">
+                      <h4>Ajout eleve par excel</h4>
+                    </div>
+                     <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-8">
+                                <label for="inputEmail4">File</label>
+                                <input type="file" class="form-control" name="fichier">
+                            </div>
+                            
+                            <div class="form-inline col-md-4">
+                                <label for="inputEmail4">Transféré</label>&nbsp;&nbsp;&nbsp;
+                                <input type="radio" class="form-control" id="transfert" value="1" onclick="radio();" name="transfert">&nbsp;&nbsp;&nbsp;
+                                <label for="inputEmail4">Orienté</label>&nbsp;&nbsp;&nbsp;
+                                <input type="radio" class="form-control" value="0" id="transfert" onclick="radio();" name="transfert">&nbsp;&nbsp;&nbsp;
+                                <label for="inputEmail4">Existant</label>&nbsp;&nbsp;&nbsp;
+                                <input type="radio" class="form-control" id="transfert" checked="" value="2" onclick="radio();" name="transfert">&nbsp;&nbsp;&nbsp;
+                            </div>
+                        </div>
+                        <!-- <div id="f1" style="display: none;" class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="inputEmail4">Référence</label>
+                                <input type="text" class="form-control" id="reference" name="reference" >
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputEmail4">Provenance</label>
+                                <input type="text" class="form-control" id="source" name="source">
+                            </div>
+                        </div> -->
+                    </div>
+                        <div class="card-footer">
+                            <a href="{{path('listeeleve')}}" class="btn btn-warning">Retour</a>
+                            <button type="submit" class="btn btn-primary">Ajouter</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+{% block javascript %}
+<script>
+function radio()
+{
+    var x=document.querySelector("input[name=transfert]:checked").value;
+    if(x=="1")
+    {
+        document.getElementById("f1").style.display="block";
+        $("reference").attr("required",true);
+        $("source").attr("required",true);
+    }
+    else if(x=="0"){
+        document.getElementById("f1").style.display="none";
+        $("reference").attr("required",false);
+        $("source").attr("required",false);
+    }
+}
+</script>
+{% endblock %}

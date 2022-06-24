@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cahier de texte{% endblock %}
+{% block body %}
+<div class="main-content">
+  {% for message in app.flashes('ERREUR') %}
+        <script>
+          function erreur(){
+        swal('Refusé', '{{ message }}', 'error')
+      }
+          window.onload = erreur;
+           // jWarning('{{ message }}', 'Notification', function(r) {});
+        </script>
+     {% endfor %}
+     {% for message in app.flashes('SUCCESS') %}
+        <script>
+          function success(){
+    // alert('ok')
+    swal('Réussie', '{{ message }}', 'success')
+    }
+          window.onload = success;
+         // jMessage('{{ message }}', 'Notification', function(r) {});
+      </script>
+  {% endfor %}
+    <div class="section-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h4>Cahier de texte</h4>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-striped" id="tableExport">
+                  <thead>
+                    <tr>
+                      <th class="text-center">#</th>
+                      <th>Annee</th>
+                      <th>Semestre</th>
+                      <th>Contenu</th>
+                      <th>Date</th>
+                      <th>Statut</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% set count = 1 %}
+                    {% for liste in cahiers %}
+                    <tr>
+                      <td>{{count}}</td>
+                      <td><div class="badge badge-success badge-shadow">{{liste.idAnnee.libelleAnnee}}</div></td>
+                      <td>{{liste.idSemestre.libelleSemestre}}</td>
+                      <td>{{liste.contenu|raw}}</td>
+                      <td>{{liste.idJour.libelleJour}} de {{liste.idHeure.libelleHeure}}</td>
+                      <td>{% if liste.validation == 0 %}<span class="badge badge-warning badge-shadow">En attente de validation</span>{% else %}<span class="badge badge-success badge-shadow">Valider</span>{% endif %}</td>
+                      <!-- <td class="align-middle">
+                        <div class="progress progress-xs">
+                          <div class="progress-bar bg-success width-per-90"></div>
+                        </div>
+                      </td> -->
+                      <td><a href="#"><span class="badge badge-info badge-shadow">Modifier</span></a></td>
+                    </tr>
+                    {% set count = count + 1 %}
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> 
+</div>
+<script>
+    // function detail(id){
+    //     //var id = $('#iddepot').val();
+    //     console.log(id);
+    //     var parametros = {'id':id};
+    //     $.ajax({
+    //         url:'/detail',
+    //         type:"POST",
+    //         dataType:"json",
+    //         data:parametros,
+    //         async:true,
+    //         success: function(response){
+    //             console.log(response);
+    //             if("REQUETE" == response){
+    //                 $("#details").html("<td>Aucun resultat trouvé</td>");
+    //             }else{
+    //                 $("#details").html(response);
+    //             }
+    //         }
+    //     })
+    // }
+
+    function desattribuer(id){
+        //var id = $('#iddepot').val();
+        console.log(id);
+        var parametros = {'id':id};
+        $.ajax({
+            url:'/desattribuer',
+            type:"POST",
+            dataType:"json",
+            data:parametros,
+            async:true,
+            success: function(response){
+                console.log(response);
+                if("REQUETE" == response){
+                    $("#idDesattribuer").html("<td colspan='4'>Aucun resultat trouvé</td>");
+                }else{
+                    $("#idDesattribuer").html(response);
+                }
+            }
+        })
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,177 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cahier de texte{% endblock %}
+{% block body %}
+<div class="main-content">
+  {% for message in app.flashes('ERREUR') %}
+        <script>
+          function erreur(){
+        swal('Refusé', '{{ message }}', 'error')
+      }
+          window.onload = erreur;
+           // jWarning('{{ message }}', 'Notification', function(r) {});
+        </script>
+     {% endfor %}
+     {% for message in app.flashes('SUCCESS') %}
+        <script>
+          function success(){
+    // alert('ok')
+    swal('Réussie', '{{ message }}', 'success')
+    }
+          window.onload = success;
+         // jMessage('{{ message }}', 'Notification', function(r) {});
+      </script>
+  {% endfor %}
+    <div class="section-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h4>Cahier de texte</h4>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-4">
+                  <ul class="nav nav-pills flex-column" id="myTab4" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" id="home-tab4" data-toggle="tab" href="#home4" role="tab"
+                        aria-controls="home" aria-selected="true">Tous</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="profile-tab4" data-toggle="tab" href="#profile4" role="tab"
+                        aria-controls="profile" aria-selected="false">En attente</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="contact-tab4" data-toggle="tab" href="#contact4" role="tab"
+                        aria-controls="contact" aria-selected="false">Valider</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-12 col-sm-12 col-md-8">
+                  <div class="tab-content no-padding" id="myTab2Content">
+                    <div class="tab-pane fade show active" id="home4" role="tabpanel" aria-labelledby="home-tab4">
+                      <div class="table-responsive">
+                        <table class="table table-striped" id="table-1">
+                          <thead>
+                            <tr>
+                              <th class="text-center">#</th>
+                              <th>Annee</th>
+                              <th>Semestre</th>
+                              <th>Prof</th>
+                              <th>Contenu</th>
+                              <th>Date</th>
+                              <th>Statut</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% set count = 1 %}
+                            {% for liste in cahiers %}
+                            <tr>
+                              <td>{{count}}</td>
+                              <td><div class="badge badge-success badge-shadow">{{liste.idAnnee.libelleAnnee}}</div></td>
+                              <td>{{liste.idSemestre.libelleSemestre}}</td>
+                              <td>{{liste.idUtilisateur.nomUtilisateur|upper}} {{liste.idUtilisateur.prenomUtilisateur|upper}}</td>
+                              <td>{{liste.contenu|raw}}</td>
+                              <td>{{liste.idJour.libelleJour}} de {{liste.idHeure.libelleHeure}}</td>
+                              <td>{% if liste.validation == 0 %}<span class="badge badge-warning badge-shadow">En attente de validation</span>{% else %}<span class="badge badge-success badge-shadow">Valider</span>{% endif %}</td>
+                              <!-- <td class="align-middle">
+                                <div class="progress progress-xs">
+                                  <div class="progress-bar bg-success width-per-90"></div>
+                                </div>
+                              </td> -->
+                              <td>{% if liste.validation == 0 %}<a href="{{path('validation',{'id':liste.idCahierTexte})}}"><span class="badge badge-info badge-shadow">Valider</span></a>{% else %}<span class="badge badge-info badge-shadow">Pas d'action</span>{% endif %}</td>
+                            </tr>
+                            {% set count = count + 1 %}
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="profile4" role="tabpanel" aria-labelledby="profile-tab4">
+                      <div class="table-responsive">
+                        <table class="table table-striped" id="table-1">
+                          <thead>
+                            <tr>
+                              <th class="text-center">#</th>
+                              <th>Annee</th>
+                              <th>Semestre</th>
+                              <th>Prof</th>
+                              <th>Contenu</th>
+                              <th>Date</th>
+                              <th>Statut</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% set count = 1 %}
+                            {% for liste in attente %}
+                            <tr>
+                              <td>{{count}}</td>
+                              <td><div class="badge badge-success badge-shadow">{{liste.idAnnee.libelleAnnee}}</div></td>
+                              <td>{{liste.idSemestre.libelleSemestre}}</td>
+                              <td>{{liste.idUtilisateur.nomUtilisateur|upper}} {{liste.idUtilisateur.prenomUtilisateur|upper}}</td>
+                              <td>{{liste.contenu|raw}}</td>
+                              <td>{{liste.idJour.libelleJour}} de {{liste.idHeure.libelleHeure}}</td>
+                              <td>{% if liste.validation == 0 %}<span class="badge badge-warning badge-shadow">En attente de validation</span>{% else %}<span class="badge badge-success badge-shadow">Valider</span>{% endif %}</td>
+                              <!-- <td class="align-middle">
+                                <div class="progress progress-xs">
+                                  <div class="progress-bar bg-success width-per-90"></div>
+                                </div>
+                              </td> -->
+                              <td>{% if liste.validation == 0 %}<a href="{{path('validation',{'id':liste.idCahierTexte})}}"><span class="badge badge-info badge-shadow">Valider</span></a>{% else %}<span class="badge badge-info badge-shadow">Pas d'action</span>{% endif %}</td>
+                            </tr>
+                            {% set count = count + 1 %}
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="contact4" role="tabpanel" aria-labelledby="contact-tab4">
+                      <table class="table table-striped" id="table-1">
+                          <thead>
+                            <tr>
+                              <th class="text-center">#</th>
+                              <th>Annee</th>
+                              <th>Semestre</th>
+                              <th>Prof</th>
+                              <th>Contenu</th>
+                              <th>Date</th>
+                              <th>Statut</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% set count = 1 %}
+                            {% for liste in valider %}
+                            <tr>
+                              <td>{{count}}</td>
+                              <td><div class="badge badge-success badge-shadow">{{liste.idAnnee.libelleAnnee}}</div></td>
+                              <td>{{liste.idSemestre.libelleSemestre}}</td>
+                              <td>{{liste.idUtilisateur.nomUtilisateur|upper}} {{liste.idUtilisateur.prenomUtilisateur|upper}}</td>
+                              <td>{{liste.contenu|raw}}</td>
+                              <td>{{liste.idJour.libelleJour}} de {{liste.idHeure.libelleHeure}}</td>
+                              <td>{% if liste.validation == 0 %}<span class="badge badge-warning badge-shadow">En attente de validation</span>{% else %}<span class="badge badge-success badge-shadow">Valider</span>{% endif %}</td>
+                              <!-- <td class="align-middle">
+                                <div class="progress progress-xs">
+                                  <div class="progress-bar bg-success width-per-90"></div>
+                                </div>
+                              </td> -->
+                              <td>{% if liste.validation == 0 %}<a href="{{path('validation',{'id':liste.idCahierTexte})}}"><span class="badge badge-info badge-shadow">Valider</span></a>{% else %}<span class="badge badge-info badge-shadow">Pas d'action</span>{% endif %}</td>
+                            </tr>
+                            {% set count = count + 1 %}
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> 
+</div>
+{% endblock %}

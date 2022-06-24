@@ -1,0 +1,24 @@
+
+    <ul class="sidebar-menu">
+      <li class="menu-header">CENSEUR</li>
+      <li class="dropdown active">
+        <a href="{{path('index')}}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="menu-toggle nav-link has-dropdown"><i
+            data-feather="briefcase"></i><span>Attribution</span></a>
+        <ul class="dropdown-menu">
+          <li><a class="nav-link" href="{{path('attr_surveillant_classe')}}">Attribution-classe</a></li>
+          <li><a class="nav-link" href="{{path('desattribuer')}}">Désattribution-classe</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="menu-toggle nav-link has-dropdown"><i
+            data-feather="briefcase"></i><span>Cahier de texte</span></a>
+        <ul class="dropdown-menu">
+          <li><a class="nav-link" href="{{path('listecenseur')}}">Validation cahier de texte</a></li>
+        </ul>
+      </li>
+    </ul>
+  </aside>
+</div>

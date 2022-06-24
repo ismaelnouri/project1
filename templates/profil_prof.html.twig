@@ -1,0 +1,40 @@
+
+    <ul class="sidebar-menu">
+      <li class="menu-header">PROFESSEUR</li>
+      <li class="dropdown active">
+        <a href="{{path('index')}}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="menu-toggle nav-link has-dropdown"><i
+            data-feather="briefcase"></i><span>Eleve</span></a>
+        <ul class="dropdown-menu">
+          <li><a class="nav-link" href="{{path('listeinscription')}}">Liste eleve</a></li>
+          <li><a class="nav-link" href="{{path('listeabsence')}}">Liste absence</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="menu-toggle nav-link has-dropdown"><i
+            data-feather="briefcase"></i><span>Note</span></a>
+        <ul class="dropdown-menu">
+          <li><a class="nav-link" href="{{path('ajoutnote')}}">Ajout note</a></li>
+          <li><a class="nav-link" href="{{path('listenote')}}">Liste note</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="menu-toggle nav-link has-dropdown"><i
+            data-feather="briefcase"></i><span>Cahier de texte</span></a>
+        <ul class="dropdown-menu">
+          <li><a class="nav-link" href="{{path('ajoutcahier')}}">Remplir cahier de texte</a></li>
+          <li><a class="nav-link" href="{{path('listecahier')}}">Cahier de texte</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="menu-toggle nav-link has-dropdown"><i
+            data-feather="briefcase"></i><span>Génération</span></a>
+        <ul class="dropdown-menu">
+          <li><a class="nav-link" href="{{path('semestrielle')}}">Note semestrielle</a></li>
+        </ul>
+      </li>
+    </ul>
+  </aside>
+</div>

@@ -1,0 +1,140 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout note{% endblock %}
+{% block body %}
+<div class="main-content">
+  {% for message in app.flashes('ERREUR') %}
+        <script>
+          function erreur(){
+        swal('Refusé', '{{ message }}', 'error')
+      }
+          window.onload = erreur;
+           // jWarning('{{ message }}', 'Notification', function(r) {});
+        </script>
+     {% endfor %}
+     {% for message in app.flashes('SUCCESS') %}
+        <script>
+          function success(){
+    // alert('ok')
+    swal('Réussie', '{{ message }}', 'success')
+    }
+          window.onload = success;
+         // jMessage('{{ message }}', 'Notification', function(r) {});
+      </script>
+  {% endfor %}
+  <form action="{{path('paiementallocateur')}}" method="post" enctype="multipart/form-data">
+     <div class="section-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h4>ALLOCATION</h4>
+            </div>
+              <div class="form-row">
+                <div class="col-md-1"></div>
+                <div class="form-inline col-md-11">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label for="inputEmail4">Tranche</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <select type="classe" class="form-control" name="tranche" id="tranche">
+                        <option value="">Merci de choisir une tranche</option>
+                        <option value="1">1 Semestre</option>
+                        <option value="2">2 Semestre</option>
+                    </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type="submit" class="btn btn-primary form-control" value="recherche" name="valider">Rechercher</button>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% if eleves is defined %}
+    <div class="section-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h4>Paiement des allocateur pour le {% if tranche == 1 %}1er Semestre{% else %} 2e Semestre {% endif %}</h4><br>
+              <h4>Pour l'année academique {{annee.libelleAnnee}}</h4>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-striped" id="tableExport">
+                  <thead>
+                     <tr>
+                        <th></th>
+                        <th>#</th>
+                        <th>Annee</th>
+                        <th>Eleve</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% set count = 1 %}
+                        {% for list in eleves %}
+                      <tr>
+                        <td><input type="checkbox" value="{{list.idAllocation}}" name="mesIds[]"></td>
+                        <td>{{count}}</td>
+                        <td>{{list.idAnnee.libelleAnnee}}</td>
+                        <td>{{list.idEleve.matriculeEleve}} {{list.idEleve.nomEleve}} {{list.idEleve.prenomEleve}}</td>
+                      </tr>
+                    {% set count = count + 1 %}
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+      <div class="card-footer">
+        <a href="{{path('listeeleve')}}" class="btn btn-warning">Retour</a>
+        <button type="submit" class="btn btn-primary" value="valider" name="valider">Valider</button>
+      </div>
+    </div>
+   </form>
+  </div> 
+</div>
+<script>
+    function desattribuer(id){
+        //var id = $('#iddepot').val();
+        console.log(id);
+        var parametros = {'id':id};
+        $.ajax({
+            url:'/desattribuer',
+            type:"POST",
+            dataType:"json",
+            data:parametros,
+            async:true,
+            success: function(response){
+                console.log(response);
+                if("REQUETE" == response){
+                    $("#idDesattribuer").html("<td colspan='4'>Aucun resultat trouvé</td>");
+                }else{
+                    $("#idDesattribuer").html(response);
+                }
+            }
+        })
+    }
+
+    function responsable(){
+        var id = $('#classe').val();
+        console.log(id);
+        var parametros = {'id':id};
+        $.ajax({
+            url:'/ajax/responsable',
+            type:"POST",
+            dataType:"json",
+            data:parametros,
+            async:true,
+            success: function(response){
+                console.log(response);
+                if("REQUETE" == response){
+                    $("#matiere").html("");
+                }else{
+                    $("#matiere").html(response);
+                }
+            }
+        })
+    }
+</script>
+{% endblock %}

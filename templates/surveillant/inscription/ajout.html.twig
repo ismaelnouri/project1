@@ -1,0 +1,207 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout Matiere{% endblock %}
+{% block body %}
+<div class="main-content">
+    {% for message in app.flashes('ERREUR') %}
+        <script>
+            function erreur(){
+                swal('Refusé', '{{ message }}', 'error')
+            }
+            window.onload = erreur;
+           // jWarning('{{ message }}', 'Notification', function(r) {});
+        </script>
+     {% endfor %}
+     {% for message in app.flashes('SUCCESS') %}
+        <script>
+            function success(){
+        // alert('ok')
+        swal('Réussie', '{{ message }}', 'success')
+    }
+            window.onload = success;
+         // jMessage('{{ message }}', 'Notification', function(r) {});
+      </script>
+    {% endfor %}
+    <section class="section">
+        <div class="section-body">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-12 card">
+                    <form action="{{path('ajoutinscription')}}" method="post" enctype="multipart/form-data">
+                    <div class="card-header">
+                      <h4>Inscription</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-2"></div>
+                            <div class="form-inline col-md-4">
+                                <label for="inputEmail4">Classe</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <select type="classe" class="form-control" name="classe">
+                                    <option value="">Merci de choisir une classe</option>
+                                    {% for liste in classes%}
+                                    <option value="{{liste.idClasse.idClasse}}">{{liste.idClasse.libelleClasse}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-inline col-md-4">
+                                <label for="inputEmail4">Source</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <select type="source" class="form-control" name="source">
+                                    <option value="">Merci de choisir une source</option>
+                                    <option value="1">Transféré</option>
+                                    <option value="2">Orienté</option>
+                                    <option value="3">Existant</option>
+                                </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button type="submit" class="btn btn-primary form-control" value="recherche" name="valider">Ajouter</button>
+                            </div>
+                            <div class="form-group col-md-2"></div>
+                        </div>
+                        {% if classe is defined %}
+                        <div class="row">
+                            <table class="table table-striped table-hover" style="width:100%;">
+                                <thead>
+                                  <tr>
+                                    <th>Classe</th>
+                                    <th>Place</th>
+                                    <th>Disponible</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>{{classe.codeClasse}} {{classe.libelleClasse}}</td>
+                                    <td>{{occupe}}/{{classe.nbrePlace}}</td>
+                                    <td><span class="badge badge-success">{{classe.nbrePlace - occupe}}</span></td>
+                                </tbody>
+                          </table>
+                        </div>
+                        <br>
+                        <div class="row">
+                        {% if source == 1 %}
+                        <div class="table-responsive">
+                          <table class="table table-striped table-hover" id="table-1" style="width:100%;">
+                            <thead>
+                              <tr>
+                                <th></th>
+                                <th>#</th>
+                                <th>Annee</th>
+                                <th>Reference</th>
+                                <th>Eleve</th>
+                                <th>Niveau</th>
+                                <th>Provenance</th>
+                                <th>Redoublement</th>
+                                <th>Date transfert</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                {% set count = 1 %}
+                                {% for list in resultats %}
+                              <tr>
+                                <td><input type="checkbox" value="{{list.idTransfert}}" name="mesIds[]"></td>
+                                <td>{{count}}</td>
+                                <td>{{list.idAnnee.libelleAnnee}}</td>
+                                <td>{{list.referenceTransfert}}</td>
+                                <td>{{list.idEleve.matriculeEleve}} {{list.idEleve.nomEleve}} {{list.idEleve.prenomEleve}}</td>
+                                <td>{{list.idNiveau.libelleNiveau}}</td>
+                                <td>{{list.source}}</td>
+                                <td>{% if list.redouble == null %}<span class="badge badge-primary">Jamais rédoublé</span>{% else %}<span class="badge badge-primary">{{list.redouble}}</span>{% endif %}</td>
+                                <td>{{list.dateTransfert|date('d-m-Y')}}</td>
+                              </tr>
+                              {% set count = count + 1 %}
+                              {% endfor %}
+                            </tbody>
+                          </table>
+                        </div>
+                        {% endif %}
+                        {% if source == 2 %}
+                        <div class="table-responsive">
+                          <table class="table table-striped table-hover" id="table-1" style="width:100%;">
+                            <thead>
+                              <tr>
+                                <th></th>
+                                <th>#</th>
+                                <th>Annee</th>
+                                <th>Eleve</th>
+                                <th>Niveau</th>
+                                <th>Date orientation</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                {% set count = 1 %}
+                                {% for list in resultats %}
+                              <tr>
+                                <td><input type="checkbox" value="{{list.idOriente}}" name="mesIds[]"></td>
+                                <td>{{count}}</td>
+                                <td>{{list.idAnnee.libelleAnnee}}</td>
+                                <td>{{list.idEleve.matriculeEleve}} {{list.idEleve.nomEleve}} {{list.idEleve.prenomEleve}}</td>
+                                <td>{{list.idNiveau.libelleNiveau}}</td>
+                                <td>{{list.dateOriente|date('d-m-Y')}}</td>
+                              </tr>
+                              {% set count = count + 1 %}
+                              {% endfor %}
+                            </tbody>
+                          </table>
+                        </div>
+                        {% endif %}
+                        {% if source == 3 %}
+                        <div class="table-responsive">
+                          <table class="table table-striped table-hover" id="table-1" style="width:100%;">
+                            <thead>
+                              <tr>
+                                <th></th>
+                                <th>#</th>
+                                <th>Annee</th>
+                                <th>Eleve</th>
+                                <th>Niveau</th>
+                                <th>Date orientation</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                {% set count = 1 %}
+                                {% for list in resultats %}
+                              <tr>
+                                <td><input type="checkbox" value="{{list.idExistant}}" name="mesIds[]"></td>
+                                <td>{{count}}</td>
+                                <td>{{list.idAnnee.libelleAnnee}}</td>
+                                <td>{{list.idEleve.matriculeEleve}} {{list.idEleve.nomEleve}} {{list.idEleve.prenomEleve}}</td>
+                                <td>{{list.idNiveau.libelleNiveau}}</td>
+                                <td>{{list.dateAjout|date('d-m-Y')}}</td>
+                              </tr>
+                              {% set count = count + 1 %}
+                              {% endfor %}
+                            </tbody>
+                          </table>
+                        </div>
+                        {% endif %}
+                        </div>
+                        {% endif %}
+                    </div>
+                        <div class="card-footer">
+                            <a href="{{path('listeeleve')}}" class="btn btn-warning">Retour</a>
+                            <button type="submit" class="btn btn-primary" value="valider" name="valider">Inscrire</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+{% block javascript %}
+<script>
+function radio()
+{
+    var x=document.querySelector("input[name=transfert]:checked").value;
+    if(x=="1")
+    {
+        document.getElementById("f1").style.display="block";
+        $("reference").attr("required",true);
+        $("source").attr("required",true);
+    }
+    else if(x=="0"){
+        document.getElementById("f1").style.display="none";
+        $("reference").attr("required",false);
+        $("source").attr("required",false);
+    }
+}
+</script>
+{% endblock %}

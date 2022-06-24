@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout Utilisateur{% endblock %}
+{% block body %}
+<div class="main-content">
+	{% for message in app.flashes('ERREUR') %}
+        <script>
+        	function erreur(){
+				swal('Refusé', '{{ message }}', 'error')
+			}
+        	window.onload = erreur;
+           // jWarning('{{ message }}', 'Notification', function(r) {});
+        </script>
+     {% endfor %}
+     {% for message in app.flashes('SUCCESS') %}
+      	<script>
+      		function success(){
+		// alert('ok')
+		swal('Réussie', '{{ message }}', 'success')
+	}
+        	window.onload = success;
+         // jMessage('{{ message }}', 'Notification', function(r) {});
+      </script>
+    {% endfor %}
+    <section class="section">
+      	<div class="section-body">
+        	<div class="row">
+          	<!-- <div class="col-12 col-md-6 col-lg-6"> -->
+          		<div class="col-md-1"></div>
+				<div class="col-md-10 card">
+					<form action="{{path('modifier_utilisateur',{'id':idUtilisateur})}}" method="post">
+				  		<div class="card-header">
+				    		<h4>Modification utilisateur</h4>
+				  		</div>
+				  		<div class="form-group">
+				      		<label for="inputAddress">Profil</label>
+				      		<select type="text" name="profil" class="form-control" id="inputAddress" required>
+				      			<option value="{{idProfil}}">{{libelleProfil}}</option>
+				      			{% for list in profils %}
+				      			<option value="{{list.idProfil}}">{{list.libelleProfil}}</option>
+				      			{% endfor %}
+				      		</select>
+				    	</div>
+				  		<div class="card-body">
+				    		<div class="form-row">
+				      			<div class="form-group col-md-6">
+				        			<label for="inputEmail4">Nom</label>
+				        			<input type="text" name="nom" class="form-control" id="nom" value="{{nom}}" placeholder="Nom" >
+				      			</div>
+				      			<div class="form-group col-md-6">
+				        			<label for="inputPassword4">Prenom</label>
+				       			 	<input type="text" name="prenom" class="form-control" id="prenom" value="{{prenom}}" placeholder="Prenom" required>
+				      			</div>
+				    		</div>
+				    		<div class="form-row">
+				      			<div class="form-group col-md-6">
+				        			<label for="inputEmail4">Login</label>
+				        			<input type="text" name="login" class="form-control" id="nom" disabled value="{{login}}" placeholder="Login">
+				      			</div>
+				      			<div class="form-group col-md-6">
+				        			<label for="inputPassword4">Téléphone</label>
+				        			<input type="text" name="tel" class="form-control" id="prenom" value="{{tel}}" placeholder="Téléphone">
+				      			</div>
+				    		</div>
+				  		</div>
+				  		<div class="card-footer">
+				    		<a href="{{path('listeutilisateur')}}" class="btn btn-warning">Retour</a>
+				    		<button type="submit" class="btn btn-primary">Modifier</button>
+				  		</div>
+			  		</form>
+				</div>
+				<div class="col-md-1"></div>
+			</div>
+		</div>
+	</section>
+</div>
+{% endblock %}
+{% block javascript %}
+
+{% endblock %}

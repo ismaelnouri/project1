@@ -1,0 +1,157 @@
+<page backtop="10mm" backleft="10mm" backright="10mm" backbottom="10mm">
+    <!-- Entete de page -->
+    <!-- <div style="background-image:url(test2.jpg)"> -->
+        <div id="filigrane">
+        <table style="font-size: 13px;margin-left: 5px; border:0;">
+            <tr >
+                <td style="text-align: left; border-right: 0; border-bottom: 0; border-left: 0; border-top:0" class="50p">
+                    <b><i style="font-size: 13px; margin: 5px;">REPUBLIQUE DU NIGER</i></b><br>
+                    <b><i style="font-size: 13px; margin: 5px;">MINISTERE DE L'EDUCATION NATIONALE</i></b><br>
+                    <b><i style="font-size: 13px; margin: 5px;">DREN NIAMEY</i></b><br>
+                    <b><i style="font-size: 13px; margin: 5px;">DDEN NIAMEY IV</i></b><br>
+                    <b><i style="font-size: 13px; margin: 5px;">IESG NY IV</i></b><br>
+                    <b><i style="font-size: 13px; margin: 5px;">CES NIAMEY 2000/I</i></b><br>
+                </td>
+                <td style="text-align: right; border-bottom:0; border-right: 0; border-top:0" class="50p">
+                    <b><i style="font-size: 13px; margin: 5px;">ANNEE SCOLAIRE : {{annee.libelleAnnee}}</i>&nbsp;&nbsp;</b><br>
+                    <b><i style="font-size: 13px; margin: 5px;">SEMESTRE : {{semestre.libelleSemestre}}</i>&nbsp;&nbsp;</b><br>
+                    <b><i style="font-size: 13px; margin: 5px;">SECTION : {{section.libelleSection}}</i>&nbsp;&nbsp;</b><br>
+                    <b><i style="font-size: 13px; margin: 5px;">NIVEAU : {{niveau.libelleNiveau}}</i>&nbsp;&nbsp;</b><br>
+                    
+                </td>
+            </tr>
+        </table>
+        <!-- fin entete de page  -->
+
+        <!-- titre du bulletin -->
+        <div style="background-color: grey;margin-left: 400px; width: 210px; height: 30px; margin-top: 25px;">
+            <b style="font-size: 20px;">BILAN SEMESTRIEL</b> 
+        </div>
+        <div style="margin-left: 430px; width: 210px; height: 30px; margin-top: 10px;">
+            <b style="font-size: 20px;">Classe de : {{classe.codeClasse}}</b> 
+        </div>
+        <!-- fin titre du bulletin -->
+
+        <!-- Informations sur le professeur et rang -->
+        
+        <!-- Fin informations sur le professeur et rang -->
+
+        <!-- Debut du tableau -->
+        <table style="margin-top: 10px; font-size: 13px;">
+            <thead>
+                <tr style="text-align:center;" valign="center">
+                    <th style="text-align: left;" width="150"><b>Noms et prénoms</b></th>
+                    {% for m in matieres %}
+                    <th valign="center" width="70" height="20"><b>{{m.codeMatiere}}</b></th>
+                    {% endfor %}
+                    <th style="text-align: center;" width="70"><b>Total</b></th>
+                    <th style="text-align: center;" width="70"><b>Moyenne</b></th>
+                    <th style="text-align: center;" width="70"><b>Rang</b></th>
+                    <!-- <th width="30">MC<br>/20</th>
+                    <th width="30">NC<br>/20</th>
+                    <th width="30">MG<br>/20</th>
+                    <th width="40">Coef</th>
+                    <th width="70">Moy ceof</th>
+                    <th width="25">Rang</th>
+                    <th width="100">Appréciation</th>
+                    <th width="100">Signature</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for e in eleves %}
+                    <tr>
+                        <td width="150"><b>{{e.idEleve.nomEleve | upper}} {{e.idEleve.prenomEleve | upper}}</b></td>
+                        
+                        {% for n in notes %}
+                        {% set MG = ((n.noteClasse + n.noteCompo)/2) %}
+                        {% if e.idEleve.idEleve == n.idEleve.idEleve %}
+                        <td style="text-align:center;" width="30">{{MG|number_format(2,',')}}</td>
+                        {% endif %}
+                        {% endfor %}
+                        <td style="text-align:center;" width="30">{% if buls %}{{buls[e.idEleve.idEleve].total|number_format(2,',')}}{% endif %}</td>
+                        <td style="text-align:center;" width="30">{% if buls %}{{buls[e.idEleve.idEleve].moyenne|number_format(2,',')}}{% endif %}</td>
+                        <td style="text-align:center;" width="30">{% if buls %}{{buls[e.idEleve.idEleve].rang|number_format(2,',')}}{% endif %}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <!-- Fin du tableau -->
+        
+    <div style="margin-top: 15px;">
+
+    </div>
+</div>
+    <style type="text/css">
+        td,
+        th {
+            border: 0.5px solid black;
+    
+        }
+
+        table {
+            width: 100%;
+            
+            font-family: helvetica;
+            line-height: 5mm;
+            border-collapse: collapse;
+        }
+        h2 {
+            margin: 0;
+            padding: 0;
+        }
+        p {
+            margin: 5px;
+        }
+        #filigrane{
+            background-image: url(logo2.jpg);
+            background-repeat: no-repeat;
+            background-position: center; 
+        }
+    
+        .border th {
+            border: 1px solid #000;
+            color: white;
+            background: #717375;
+            padding: 5px;
+            font-weight: normal;
+            font-size: 14px;
+            text-align: center;
+        }
+        .border td {
+            border: 1px solid #CFD1D2;
+            padding: 5px 10px;
+            text-align: center;
+        }
+        
+        .no-border {
+            border-right: 1px solid #CFD1D2;
+            border-left: none;
+            border-top: none;
+            border-bottom: none;
+        }
+        .space {
+            padding-top: 250px;
+        }
+    
+        .10p {
+            width: 10%;
+        }
+        .15p {
+            width: 15%;
+        }
+        .25p {
+            width: 25%;
+        }
+        .50p {
+            width: 50%;
+        }
+        .60p {
+            width: 60%;
+        }
+        .75p {
+            width: 75%;
+        }
+    </style>
+</page>
+    
+    

@@ -1,0 +1,145 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout note{% endblock %}
+{% block body %}
+<div class="main-content">
+  {% for message in app.flashes('ERREUR') %}
+        <script>
+          function erreur(){
+        swal('Refusé', '{{ message }}', 'error')
+      }
+          window.onload = erreur;
+           // jWarning('{{ message }}', 'Notification', function(r) {});
+        </script>
+     {% endfor %}
+     {% for message in app.flashes('SUCCESS') %}
+        <script>
+          function success(){
+    // alert('ok')
+    swal('Réussie', '{{ message }}', 'success')
+    }
+          window.onload = success;
+         // jMessage('{{ message }}', 'Notification', function(r) {});
+      </script>
+  {% endfor %}
+  <form action="{{path('paiementcoges')}}" method="post" enctype="multipart/form-data">
+     <div class="section-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h4>Paiement coges</h4>
+            </div>
+              <div class="form-row">
+                <div class="col-md-1"></div>
+                <div class="form-inline col-md-11">
+                  <label for="inputEmail4">Année</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <select type="text" class="form-control" name="annee" id="annee">
+                        <option value="">Merci de choisir une année</option>
+                        {% for anne in annees %}
+                        <option value="{{anne.idAnnee}}">{{anne.libelleAnnee}}</option>
+                        {% endfor %}
+                    </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label for="inputEmail4">Classe</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <select type="text" class="form-control" name="classe" id="classe">
+                        <option value="">Merci de choisir une classe</option>
+                        {% for classe in classes %}
+                        <option value="{{classe.idClasse}}">{{classe.libelleClasse}}</option>
+                        {% endfor %}
+                    </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type="submit" class="btn btn-primary form-control" value="recherche" name="valider">Rechercher</button>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% if eleves is defined %}
+    <div class="section-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h4>Paiement de coges pour l'année academique {{annee.libelleAnnee}}</h4><br>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-striped" id="tableExport">
+                  <thead>
+                     <tr>
+                        <th></th>
+                        <th>#</th>
+                        <th>Eleve</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% set count = 1 %}
+                        {% for list in eleves %}
+                      <tr>
+                        <td><input type="checkbox" value="{{list.idInscription}}" name="mesIds[]"></td>
+                        <td>{{count}}</td>
+                        <td>{{list.idEleve.matriculeEleve}} {{list.idEleve.nomEleve}} {{list.idEleve.prenomEleve}}</td>
+                      </tr>
+                    {% set count = count + 1 %}
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+      <div class="card-footer">
+        <a href="{{path('listecoges')}}" class="btn btn-warning">Retour</a>
+        <button type="submit" class="btn btn-primary" value="valider" name="valider">Valider</button>
+      </div>
+    </div>
+   </form>
+  </div> 
+</div>
+<script>
+    function desattribuer(id){
+        //var id = $('#iddepot').val();
+        console.log(id);
+        var parametros = {'id':id};
+        $.ajax({
+            url:'/desattribuer',
+            type:"POST",
+            dataType:"json",
+            data:parametros,
+            async:true,
+            success: function(response){
+                console.log(response);
+                if("REQUETE" == response){
+                    $("#idDesattribuer").html("<td colspan='4'>Aucun resultat trouvé</td>");
+                }else{
+                    $("#idDesattribuer").html(response);
+                }
+            }
+        })
+    }
+
+    function responsable(){
+        var id = $('#classe').val();
+        console.log(id);
+        var parametros = {'id':id};
+        $.ajax({
+            url:'/ajax/responsable',
+            type:"POST",
+            dataType:"json",
+            data:parametros,
+            async:true,
+            success: function(response){
+                console.log(response);
+                if("REQUETE" == response){
+                    $("#matiere").html("");
+                }else{
+                    $("#matiere").html(response);
+                }
+            }
+        })
+    }
+</script>
+{% endblock %}
