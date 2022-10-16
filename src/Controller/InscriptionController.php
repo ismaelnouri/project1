@@ -138,7 +138,7 @@ class InscriptionController extends AbstractController
             {
                 if($test == 0)
                 {
-                    if($row['nom'] == null || $row['prenom'] == null || $row['datenais'] == null || $row['lieunais'] == null || $row['tel'] == null || $row['niveau'] == null || $row['date_oriente'] == null || $row['nationalite'] == null || $row['sexe'] == null)
+                    if($row['nom'] == null || $row['prenom'] == null || $row['datenais'] == null || $row['lieunais'] == null || $row['niveau'] == null || $row['date_oriente'] == null || $row['nationalite'] == null || $row['sexe'] == null)
                     {
                         $this->addFlash('ERREUR', "Merci de verifier le contenu du fichier excel car un ou plusieurs champs sont vides!");
                         return $this->redirectToRoute('ajouteleve');
@@ -148,7 +148,7 @@ class InscriptionController extends AbstractController
                 }
                 if($test == 1)
                 {
-                    if($row['reference'] == null || $row['nom'] == null || $row['prenom'] == null || $row['datenais'] == null || $row['lieunais'] == null || $row['tel'] == null || $row['niveau'] == null || $row['date_transfert'] == null || $row['nationalite'] == null || $row['source'] == null || $row['redouble'] == null || $row['sexe'] == null)
+                    if($row['reference'] == null || $row['nom'] == null || $row['prenom'] == null || $row['datenais'] == null || $row['lieunais'] == null || $row['niveau'] == null || $row['date_transfert'] == null || $row['nationalite'] == null || $row['source'] == null || $row['redouble'] == null || $row['sexe'] == null)
                     {
                         $this->addFlash('ERREUR', "Merci de verifier le contenu du fichier excel car un ou plusieurs champs sont vides!");
                         return $this->redirectToRoute('ajouteleve');
@@ -159,7 +159,7 @@ class InscriptionController extends AbstractController
                 }
                 if($test == 2)
                 {
-                    if($row['nom'] == null || $row['prenom'] == null || $row['datenais'] == null || $row['lieunais'] == null || $row['tel'] == null || $row['niveau'] == null || $row['nationalite'] == null || $row['redouble'] == null || $row['sexe'] == null)
+                    if($row['nom'] == null || $row['prenom'] == null || $row['datenais'] == null || $row['lieunais'] == null || $row['niveau'] == null || $row['nationalite'] == null || $row['redouble'] == null || $row['sexe'] == null)
                     {
                         $this->addFlash('ERREUR', "Merci de verifier le contenu du fichier excel car un ou plusieurs champs sont vides!");
                         return $this->redirectToRoute('ajouteleve');

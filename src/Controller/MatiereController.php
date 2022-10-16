@@ -145,7 +145,7 @@ class MatiereController extends AbstractController
                 }
                 // die();
                 $manager->flush();
-                $this->addFlash('SUCCESS', "Les matiéres du niveau ".$matiere->libelleMatiere()." ont étè supprimées avec succes.");
+                $this->addFlash('SUCCESS', "Les matiéres du niveau ".$matiere->GetLibelleMatiere()." ont étè annulées avec succes.");
                 return $this->redirectToRoute('listematiere');
             }else
             {
